@@ -1,2 +1,4 @@
 IMAPClient==0.12
 pgxnclient==1.2.1
+SQLAlchemy==0.9.4
+git+https://github.com/Kozea/sqlalchemy_fdw.git
