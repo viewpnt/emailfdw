@@ -20,13 +20,28 @@ $ INSERT INTO gmail (from, to, subject, payload)
   );
 ```
 
-**emailfdw** accomplishes this by using [Multicorn](http://multicorn.org/), a PostgreSQL extension for writing foreign data wrappers in Python.
+**emailfdw** accomplishes this by using [Multicorn](http://multicorn.org/), a PostgreSQL extension for writing foreign data wrappers (FDWs) in Python.
 
 With [PostgreSQL 9.3+](https://wiki.postgresql.org/wiki/What%27s_new_in_PostgreSQL_9.3#Writeable_Foreign_Tables), foreign data wrappers can perform SQL *write* operations (INSERT, UPDATE, DELETE) in addition to *reads* (SELECT) against a remote data store.
 
 Together, **emailfdw** supports the four basic [CRUD](http://en.wikipedia.org/wiki/Create,_read,_update_and_delete) operations for persisting and manipulating email data--something that has historically been an obnoxious, pedantic task.
 
 By reducing email to basic operations on a datastore, we hope to rejuvenate people's enthusiasm for developing email-driven applications!
+
+### Why a Foreign Data Wrapper?
+
+That's a great question. **emailfdw** is critically coupled with PostgreSQL, and I *absolutely* welcome feedback about the tradeoffs and alternatives!
+
+The major reason I've come up with is that there's a lot to gain from leveraging an existing SQL query-planner.
+
+Wrapping a foreign data source so that it can be queried from a single common query planner is a *very* common problem, and PostgreSQL is on the forefront in tackling it as is evidenced with FDW developments in versions 9.3 and 9.4.
+
+These are other examples of "pseudo"-foreign data wrappers built into other datastores or libraries that I'm aware of:
+
+- MySQL's [federated tables](https://dev.mysql.com/doc/refman/5.0/en/federated-storage-engine.html)
+- [Presto](https://prestodb.io/) DB from Facebook
+- [OSQuery](https://osquery.io/)
+
 
 ----
 
@@ -40,6 +55,7 @@ Reading and writing of email data is done over two protocols, and these are what
 ### Installation
 
 - Install PostgreSQL 9.4.
-- Install multicorn
-- CREATE EXTENSION emailfdw;
-
+- pip install -r requirements.txt
+- pgxn install multicorn
+- psql -c "CREATE EXTENSION multicorn"
+- psql -c 'CREATE server "email" foreign data wrapper "multicorn"  options ("wrapper" "emailfdw.EmailFdw")'

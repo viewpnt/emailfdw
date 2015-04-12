@@ -1,0 +1,2 @@
+IMAPClient==0.12
+pgxnclient==1.2.1
