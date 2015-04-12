@@ -1,5 +1,5 @@
 # emailfdw
-===========
+
 **emailfdw** is a PostgreSQL foreign data wrapper for translating SQL to IMAP/SMTP.
 
 The feat that emailfdw accomplishes is the abstraction of email protocols to SQL queries, e.g.:
