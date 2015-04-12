@@ -55,4 +55,4 @@ docs/_build/
 
 # PyBuilder
 target/
->>>>>>> d508f9fe33b06ea87e37ca58253168dd08f13931
+.env
