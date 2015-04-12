@@ -20,28 +20,31 @@ $ INSERT INTO gmail (from, to, subject, payload)
   );
 ```
 
-**emailfdw** accomplishes this by using [Multicorn](http://multicorn.org/), a PostgreSQL extension for writing foreign data wrappers (FDWs) in Python.
-
-With [PostgreSQL 9.3+](https://wiki.postgresql.org/wiki/What%27s_new_in_PostgreSQL_9.3#Writeable_Foreign_Tables), foreign data wrappers can perform SQL *write* operations (INSERT, UPDATE, DELETE) in addition to *reads* (SELECT) against a remote data store.
-
-Together, **emailfdw** supports the four basic [CRUD](http://en.wikipedia.org/wiki/Create,_read,_update_and_delete) operations for persisting and manipulating email data--something that has historically been an obnoxious, pedantic task.
+**emailfdw** supports the four basic [CRUD](http://en.wikipedia.org/wiki/Create,_read,_update_and_delete) operations for persisting and manipulating email data--something that has historically been an obnoxious, pedantic task.
 
 By reducing email to basic operations on a datastore, we hope to rejuvenate people's enthusiasm for developing email-driven applications!
 
+### How's this work?
+
+**emailfdw** is built on top of [Multicorn](http://multicorn.org/), a PostgreSQL extension for writing foreign data wrappers (FDWs) in Python.
+
+With [PostgreSQL 9.3+](https://wiki.postgresql.org/wiki/What%27s_new_in_PostgreSQL_9.3#Writeable_Foreign_Tables), foreign data wrappers can perform SQL *write* operations (INSERT, UPDATE, DELETE) in addition to *reads* (SELECT) against a remote data store, which allows us to send emails, "delete" emails and change email labels all using raw SQL.
+
 ### Why a Foreign Data Wrapper?
 
-That's a great question. **emailfdw** is critically coupled with PostgreSQL, and I *absolutely* welcome feedback about the tradeoffs and alternatives!
-
-The major reason I've come up with is that there's a lot to gain from leveraging an existing SQL query-planner.
+The big reason is that there's a lot to gain from leveraging an existing SQL query-planner.
 
 Wrapping a foreign data source so that it can be queried from a single common query planner is a *very* common problem, and PostgreSQL is on the forefront in tackling it as is evidenced with FDW developments in versions 9.3 and 9.4.
 
-These are other examples of "pseudo"-foreign data wrappers built into other datastores or libraries that I'm aware of:
+That is a fantastic question, though. **emailfdw** *is* critically coupled with PostgreSQL, and we *absolutely* welcome feedback about the tradeoffs and alternatives!
+
+These are other examples of "pseudo"-foreign data wrappers built into other datastores or libraries:
 
 - MySQL's [federated tables](https://dev.mysql.com/doc/refman/5.0/en/federated-storage-engine.html)
 - [Presto](https://prestodb.io/) DB from Facebook
 - [OSQuery](https://osquery.io/)
 
+Open a pull request or file an issue if we're missing any!
 
 ----
 
