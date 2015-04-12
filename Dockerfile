@@ -4,9 +4,12 @@ MAINTAINER max@pooshield.com
 RUN apt-key adv --keyserver keyserver.ubuntu.com --recv-keys B97B0AFCAA1A47F044F244A07FCC7D46ACCC4CF8
 RUN echo "deb http://apt.postgresql.org/pub/repos/apt/ precise-pgdg main" > /etc/apt/sources.list.d/pgdg.list
 
-RUN apt-get update 
-RUN apt-get install -y python-software-properties software-properties-common
-RUN apt-get install -y postgresql-9.4 postgresql-client-9.4 postgresql-contrib-9.4
+RUN apt-get update && apt-get install -y \
+    python-software-properties \
+    software-properties-common \
+    postgresql-9.4 \
+    postgresql-client-9.4 \
+    postgresql-contrib-9.4
 
 USER postgres
 
